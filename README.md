@@ -19,6 +19,7 @@ This project is a simple to-do list web application where tasks are displayed. U
 2. Click on the "Add Task" button to add the task to the list.
 3. To remove a task, click on the "Remove" button next to the task.
 4. To move a task up or down in the list, click on the "Up" or "Down" button, respectively.
+<img width="960" alt="Screenshot 2024-04-12 153604" src="https://github.com/Krish1kaa/Lime_To_Dos/assets/150791638/1dcb6a5a-f73d-4a70-9bb9-fdb9c20da909">
 
 ## Local Setup
 
