@@ -1,30 +1,59 @@
 function addTask() {
-    var taskInput = document.getElementById("taskInput");
-    var taskList = document.getElementById("taskList");
-    var taskText = taskInput.value.trim();
+  const taskInput = document.getElementById("taskInput");
+  const taskList = document.getElementById("taskList");
+  
+  if (taskInput.value.trim() === "") {
+    alert("Please enter a task.");
+    return;
+  }
 
-    if (taskText !== "") {
-        var li = document.createElement("li");
-        li.innerHTML = taskText + '<div><button onclick="moveUp(this)">Up</button><button onclick="moveDown(this)">Down</button><button onclick="removeTask(this)">Remove</button></div>';
-        taskList.appendChild(li);
-        taskInput.value = "";
-    }
+  const task = document.createElement("div");
+  task.className = "task";
+  task.innerHTML = `
+    <span>${taskInput.value}</span>
+    <button onclick="markAsDone(this)">Done</button>
+    <button onclick="moveUp(this)">Move Up</button>
+    <button onclick="moveDown(this)">Move Down</button>
+    <button onclick="removeTask(this)">Remove</button>
+  `;
+  
+  taskList.appendChild(task);
+  taskInput.value = "";
 }
 
 function removeTask(button) {
-    button.parentNode.parentNode.remove();
+  button.parentNode.remove();
 }
 
 function moveUp(button) {
-    var item = button.parentNode.parentNode;
-    if (item.previousElementSibling !== null) {
-        item.parentNode.insertBefore(item, item.previousElementSibling);
-    }
+  const task = button.parentNode;
+  const taskList = task.parentNode;
+  const taskIndex = Array.from(taskList.children).indexOf(task);
+  
+  if (taskIndex > 0) {
+    taskList.insertBefore(task, taskList.children[taskIndex - 1]);
+  }
 }
 
 function moveDown(button) {
-    var item = button.parentNode.parentNode;
-    if (item.nextElementSibling !== null) {
-        item.parentNode.insertBefore(item.nextElementSibling, item);
-    }
+  const task = button.parentNode;
+  const taskList = task.parentNode;
+  const taskIndex = Array.from(taskList.children).indexOf(task);
+  
+  if (taskIndex < taskList.children.length - 1) {
+    taskList.insertBefore(taskList.children[taskIndex + 1], task);
+  }
+}
+
+function markAsDone(button) {
+  const task = button.parentNode;
+  task.classList.add("done");
+  confetti({
+    particleCount: 100,
+    spread: 70,
+    origin: { y: 0.6 }
+  });
+  setTimeout(() => {
+    task.remove();
+  }, 2000);
 }
